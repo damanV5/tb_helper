@@ -1,0 +1,11 @@
+.copy-btn{
+    position: absolute;
+    right: 4px;
+    top: 12px;
+}
+textarea{
+    width: 100%;
+    margin: auto;
+    height: 200px;
+    background: aliceblue;
+  }
