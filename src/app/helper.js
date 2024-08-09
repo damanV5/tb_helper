@@ -89,6 +89,24 @@ const getSelectSnippet=(keys)=>{
   return {jsx:htmlSnippet,path:path, fn:getValueFn,index:indexValues}
 }
 
-export {getTextInputSnippet,getColorInputSnippet,getSwitchSnippet, getFontSnippet,getSelectSnippet}
+
+const getGenericMessageSnippet=(keys)=>{
+  let htmlSnippet = ''
+  let getValueFn = ''
+  let indexValues= ''
+  keys.map((ele) => {
+      let [key, value] = ele?.split(':')
+      key = key.replace(/ /g, '');
+      value = value?.replace(/ /g, '');
+      let title = key.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, str => str.toUpperCase())
+      htmlSnippet = htmlSnippet + `<TextInput \n\t title="${title}" \n\t additionalClassNames="" type="text" \n\t onChange={e => { this.onTextChange('${key}', e) }} \n\t defaultValue={this.getLocalizedVal('${key}')} \n  />` + '\n'
+      getValueFn = getValueFn + `${key} : this?.${key}?.value` + ',\n'
+      indexValues = indexValues + `${key}: ${value}` + ',\n'
+  })
+  let path='(genericMessages => metadataMap)'
+  return {jsx:htmlSnippet , index: indexValues,path :path}
+}
+
+export {getTextInputSnippet,getColorInputSnippet,getSwitchSnippet, getFontSnippet,getSelectSnippet,getGenericMessageSnippet}
 
 

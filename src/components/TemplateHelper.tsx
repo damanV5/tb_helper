@@ -1,6 +1,6 @@
 'use client'
 import { useRef, useState } from "react";
-import { getColorInputSnippet, getTextInputSnippet, getSwitchSnippet, getFontSnippet, getSelectSnippet } from '../app/helper.js'
+import { getColorInputSnippet, getTextInputSnippet, getSwitchSnippet, getFontSnippet, getSelectSnippet, getGenericMessageSnippet } from '../app/helper.js'
 import CopyToClipboardButton from "@/components/CopyToClipboardButton";
 import '../app/styles.css'
 import { jsx } from "react/jsx-runtime";
@@ -52,9 +52,17 @@ const TemplateHelper = () => {
         }else if (type == 'select') {
             let { jsx,fn,path,index } = getSelectSnippet(keys)
             setJsxContent(jsx)
+            setConstructorContent(null)
             setFnContent(fn)
             setPath(path)
             setIndexContent(index)
+        }else if (type == 'genericmessage') {
+            let { jsx,fn,path,index } = getGenericMessageSnippet(keys)
+            setJsxContent(jsx)
+            setConstructorContent(null)
+            setFnContent(null)
+            setIndexContent(index)
+            setPath(path)
         }
     }
 
@@ -65,17 +73,18 @@ const TemplateHelper = () => {
             <div className="key-wrapper m-auto mb-6">
                 <form className="mb-4">
                     <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900  dark:text-800 ">Select Type</label>
-                    <select ref={selectRef} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select ref={selectRef} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected value={'text'}>Text Input</option>
                         <option value={'color'}>Color Input</option>
                         <option value={'switch'}>Switch</option>
                         <option value={'font'}>Font Settings</option>
                         <option value={'select'}>Select</option>
+                        <option value={'genericmessage'}>Generic Messages</option>
                     </select>
                 </form>
                 <div className="mb-4">
                     <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900  dark:text-slate-800 dark:placeholder-gray-400">Keys (CSV)</label>
-                    <input ref={inputRef} type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Add comma separated keys" required />
+                    <input ref={inputRef} type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Add comma separated keys" required />
                 </div>
                 <button onClick={() => addCodeSnippet()} type="button" className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Code</button>
                 <button onClick={() => { setConstructorContent(''); setJsxContent(''); setFnContent(''); setIndexContent(''); inputRef.current.value = "" }} type="button" className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Clear</button>
