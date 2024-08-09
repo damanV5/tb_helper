@@ -99,7 +99,7 @@ const getGenericMessageSnippet=(keys)=>{
       key = key.replace(/ /g, '');
       value = value?.replace(/ /g, '');
       let title = key.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/^./, str => str.toUpperCase())
-      htmlSnippet = htmlSnippet + `<TextInput \n\t title="${title}" \n\t additionalClassNames="" type="text" \n\t onChange={e => { this.onTextChange('${key}', e) }} \n\t defaultValue={this.getLocalizedVal('${key}')} \n  />` + '\n'
+      htmlSnippet = htmlSnippet + `<TextInput \n\t title="${title}" \n\t additionalClassNames="" \n\t type="text" \n\t onChange={e => { this.onTextChange('${key}', e) }} \n\t defaultValue={this.getLocalizedVal('${key}')} \n  />` + '\n'
       getValueFn = getValueFn + `${key} : this?.${key}?.value` + ',\n'
       indexValues = indexValues + `${key}: ${value}` + ',\n'
   })
